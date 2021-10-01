@@ -75,6 +75,7 @@ services:
 ```
 
 ## 2.5
+Command
 ```
 docker-compose up --scale compute=3
 ```
