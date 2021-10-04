@@ -6,11 +6,11 @@ docker-compose.yml
 version: '3.5' 
 
 services:
-    simple-web-service: 
-      image: devopsdockeruh/simple-web-service
-      build: . 
-      volumes: 
-        - /home/text.log:/usr/src/app/text.log
+  simple-web-service: 
+    image: devopsdockeruh/simple-web-service
+    build: . 
+    volumes: 
+      - /home/text.log:/usr/src/app/text.log
 ```
 
 ## 2.2
@@ -19,12 +19,12 @@ docker-compose.yml
 version: '3.5' 
 
 services:
-    simple-web-service: 
-      image: devopsdockeruh/simple-web-service
-      build: .
-      ports: 
-        - 8080:8080
-      command: server
+  simple-web-service: 
+    image: devopsdockeruh/simple-web-service
+    build: .
+    ports: 
+      - 8080:8080
+    command: server
 ```
 
 ## 2.3
@@ -34,19 +34,19 @@ version: '3.5'
 
 services:
   frontend:
-      image: example-frontend
-      ports: 
-        - 5000:5000 
-      environment:
-        - REACT_APP_BACKEND_URL=http://localhost:8080
-      command: ["serve", "-s", "-l", "5000", "build"]
+    image: example-frontend
+    ports: 
+      - 5000:5000 
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8080
+    command: ["serve", "-s", "-l", "5000", "build"]
   backend:
-      image: example-backend
-      ports: 
-        - 8080:8080
-      environment:
-        - REQUEST_ORIGIN=http://localhost:5000
-      command: ./server
+    image: example-backend
+    ports: 
+      - 8080:8080
+    environment:
+      - REQUEST_ORIGIN=http://localhost:5000
+    command: ./server
 ```
 
 ## 2.4
@@ -56,22 +56,22 @@ version: '3.5'
 
 services:
   frontend:
-      image: example-frontend
-      ports: 
-        - 5000:5000 
-      environment:
-        - REACT_APP_BACKEND_URL=http://localhost:8080
-      command: ["serve", "-s", "-l", "5000", "build"]
+    image: example-frontend
+    ports: 
+      - 5000:5000 
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8080
+    command: ["serve", "-s", "-l", "5000", "build"]
   backend:
-      image: example-backend
-      ports: 
-        - 8080:8080
-      environment:
-        - REQUEST_ORIGIN=http://localhost:5000
-        - REDIS_HOST=redis
-      command: ./server
+    image: example-backend
+    ports: 
+      - 8080:8080
+    environment:
+      - REQUEST_ORIGIN=http://localhost:5000
+      - REDIS_HOST=redis
+    command: ./server
   redis:
-      image: redis
+    image: redis
 ```
 
 ## 2.5
@@ -87,26 +87,26 @@ version: '3.5'
 
 services:
   frontend:
-      image: example-frontend
-      ports: 
-        - 5000:5000 
-      environment:
-        - REACT_APP_BACKEND_URL=http://localhost:8080
-      command: ["serve", "-s", "-l", "5000", "build"]
+    image: example-frontend
+    ports: 
+      - 5000:5000 
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8080
+    command: ["serve", "-s", "-l", "5000", "build"]
   backend:
-      image: example-backend
-      ports: 
-        - 8080:8080
-      environment:
-        - REQUEST_ORIGIN=http://localhost:5000
-        - REDIS_HOST=redis
-        - POSTGRES_HOST=db
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=postgres
-        - POSTGRES_DATABASE=postgres
-      command: ./server
+    image: example-backend
+    ports: 
+      - 8080:8080
+    environment:
+      - REQUEST_ORIGIN=http://localhost:5000
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DATABASE=postgres
+    command: ./server
   redis:
-      image: redis
+    image: redis
   db:
     image: postgres:13.2-alpine
     restart: unless-stopped
