@@ -39,14 +39,12 @@ services:
       - 5000:5000 
     environment:
       - REACT_APP_BACKEND_URL=http://localhost:8080
-    command: ["serve", "-s", "-l", "5000", "build"]
   backend:
     image: example-backend
     ports: 
       - 8080:8080
     environment:
       - REQUEST_ORIGIN=http://localhost:5000
-    command: ./server
 ```
 
 ## 2.4
@@ -61,7 +59,6 @@ services:
       - 5000:5000 
     environment:
       - REACT_APP_BACKEND_URL=http://localhost:8080
-    command: ["serve", "-s", "-l", "5000", "build"]
   backend:
     image: example-backend
     ports: 
@@ -69,7 +66,6 @@ services:
     environment:
       - REQUEST_ORIGIN=http://localhost:5000
       - REDIS_HOST=redis
-    command: ./server
   redis:
     image: redis
 ```
@@ -92,7 +88,6 @@ services:
       - 5000:5000 
     environment:
       - REACT_APP_BACKEND_URL=http://localhost:8080
-    command: ["serve", "-s", "-l", "5000", "build"]
   backend:
     image: example-backend
     ports: 
@@ -104,7 +99,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DATABASE=postgres
-    command: ./server
   redis:
     image: redis
   db:
