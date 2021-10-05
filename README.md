@@ -134,3 +134,41 @@ volumes:
   model:
   imgs:
 ```
+
+## 2.8
+docker-compose.yml
+```
+version: '3.5'
+
+services:
+  frontend:
+    image: example-frontend
+    ports: 
+      - 5000:5000 
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8080
+  backend:
+    image: example-backend
+    ports: 
+      - 8080:8080
+    environment:
+      - REQUEST_ORIGIN=http://localhost:5000
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DATABASE=postgres
+  redis:
+    image: redis
+  db:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=postgres
+  proxy:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+```
