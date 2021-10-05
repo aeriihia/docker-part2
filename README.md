@@ -107,3 +107,30 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
 ```
+
+## 2.7
+docker-compose.yml
+```
+version: '3.5'
+
+services:
+  frontend:
+    image: ml-frontend
+    ports: 
+      - 3000:3000
+  backend:
+    image: ml-backend
+    ports: 
+      - 5000:5000
+    volumes:
+      - model:/src/model
+  training:
+    image: ml-training
+    volumes:
+      - model:/src/model
+      - imgs:/src/imgs
+
+volumes:
+  model:
+  imgs:
+```
