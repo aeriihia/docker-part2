@@ -215,3 +215,68 @@ services:
 volumes:
   database:
 ```
+
+## 2.10
+I removed REACT_APP_BACKEND_URL=http://localhost:8080 and changed REQUEST_ORIGIN=http://localhost:5000 to REQUEST_ORIGIN=http://localhost.
+
+docker-compose.yml
+```
+version: '3.5'
+
+services:
+  frontend:
+    image: example-frontend
+    ports: 
+      - 5000:5000
+  backend:
+    image: example-backend
+    ports: 
+      - 8080:8080
+    environment:
+      - REQUEST_ORIGIN=http://localhost
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DATABASE=postgres
+  redis:
+    image: redis
+  db:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - database:/var/lib/postgresql/data
+  proxy:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+volumes:
+  database:
+```
+
+Dockerfile (Frontend)
+```
+FROM node
+EXPOSE 5000
+WORKDIR /usr/src/app
+COPY . .
+RUN npm install
+RUN npm run build
+RUN npm install -g serve
+CMD ["serve", "-s", "-l", "5000", "build"]
+```
+
+Dockerfile (Backend)
+```
+FROM golang:1.16
+EXPOSE 8080
+WORKDIR /usr/src/app
+COPY . .
+RUN go build
+CMD ./server
+```
